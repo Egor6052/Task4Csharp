@@ -101,7 +101,6 @@ namespace App4
         /// <param name="argument">Второе делимое</param>
         public static ComplexNumber operator /(ComplexNumber left, ComplexNumber right)
         {
-            // Проверка деления на ноль. Если модуль b равен нулю, вернуть комплексное число с бесконечными значениями.
             if (right._module == 0)
             {
                 return new ComplexNumber(double.PositiveInfinity, double.PositiveInfinity);
