@@ -6,7 +6,7 @@ namespace App4
     {
         private double _module;
         private double _argument;
-        
+
         /// <summary>
         /// Сеттер и геттер для поля Module
         /// Выполняем проверку на нулевые числаю Если 0 тогда генерируем новое.
@@ -26,7 +26,7 @@ namespace App4
             get { return _argument; }
             set { _argument = value; }
         }
-        
+
         /// <summary>
         /// Конструктор для комплексного числа в тригонометрической форме.
         /// Выполняем проверку на нулевые числаю. Если 0 тогда генерируем новое.
@@ -55,7 +55,7 @@ namespace App4
                 _argument = argument;
             }
         }
-        
+
         /// <summary>
         /// Перегрузка оператора сложения;
         /// </summary>
@@ -63,19 +63,27 @@ namespace App4
         /// <param name="right">Второе слогаемое</param>
         public static ComplexNumber operator +(ComplexNumber left, ComplexNumber right)
         {
+            if (left == null && right == null)
+            {
+                Console.WriteLine("Оператор не может быть null!");
+            }
             double realPart = left._module * Math.Cos(left._argument) + right._module * Math.Cos(right._argument);
             double imaginaryPart = left._module * Math.Sin(left._argument) + right._module * Math.Sin(right._argument);
 
             return new ComplexNumber(Math.Sqrt(realPart * realPart + imaginaryPart * imaginaryPart), Math.Atan2(imaginaryPart, realPart));
         }
-        
-        /// <summary>
+
+    /// <summary>
         /// Перегрузка оператора вычитания;
         /// </summary>
         /// <param name="left">Первое вычитаемое</param>
         /// <param name="right">Второе вычитаемое</param>
         public static ComplexNumber operator -(ComplexNumber left, ComplexNumber right)
         {
+            if (left == null && right == null)
+            {
+                Console.WriteLine("Оператор не может быть null!");
+            }
             double realPart = left._module * Math.Cos(left._argument) - right._module * Math.Cos(right._argument);
             double imaginaryPart = left._module * Math.Sin(left._argument) - right._module * Math.Sin(right._argument);
 
@@ -89,6 +97,10 @@ namespace App4
         /// <param name="right">Второе умножаемое</param>
         public static ComplexNumber operator *(ComplexNumber left, ComplexNumber right)
         {
+            if (left == null && right == null)
+            {
+                Console.WriteLine("Оператор не может быть null!");
+            }
             double newModule = left._module * right._module;
             double newArgument = left._argument + right._argument;
 
