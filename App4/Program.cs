@@ -14,6 +14,7 @@ namespace App4
 
             //Формула: R = b^3 + ((a + b)/(c - a)) * d ;
             ComplexNumber answerR = (secondB.Power(3)) + ((firstA + secondB) / (thirdC - firstA) * fourthD);
+            answerR.TrigonometricForm();
             answerR.AlgebraicForm();
         }
     }
