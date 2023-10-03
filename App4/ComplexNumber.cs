@@ -29,15 +29,15 @@ namespace App4
         
         /// <summary>
         /// Конструктор для комплексного числа в тригонометрической форме.
-        /// Выполняем проверку на нулевые числаю Если 0 тогда генерируем новое.
+        /// Выполняем проверку на нулевые числаю. Если 0 тогда генерируем новое.
         /// </summary>
         /// <param name="module">Модуль "р"</param>
         /// <param name="argument">Аргумент "ф"</param>
         public ComplexNumber(double module, double argument)
         {
-            Random random = new Random();
             if (module == 0)
             {
+                Random random = new Random();
                 _module = random.Next(1, 100);
             }
             else
@@ -47,6 +47,7 @@ namespace App4
 
             if (argument == 0)
             {
+                Random random = new Random();
                 _argument = random.Next(-100, 100);
             }
             else
@@ -58,8 +59,8 @@ namespace App4
         /// <summary>
         /// Перегрузка оператора сложения;
         /// </summary>
-        /// <param name="module">Первое слогаемое</param>
-        /// <param name="argument">Второе слогаемое</param>
+        /// <param name="left">Первое слогаемое</param>
+        /// <param name="right">Второе слогаемое</param>
         public static ComplexNumber operator +(ComplexNumber left, ComplexNumber right)
         {
             double realPart = left._module * Math.Cos(left._argument) + right._module * Math.Cos(right._argument);
@@ -71,8 +72,8 @@ namespace App4
         /// <summary>
         /// Перегрузка оператора вычитания;
         /// </summary>
-        /// <param name="module">Первое вычитаемое</param>
-        /// <param name="argument">Второе вычитаемое</param>
+        /// <param name="left">Первое вычитаемое</param>
+        /// <param name="right">Второе вычитаемое</param>
         public static ComplexNumber operator -(ComplexNumber left, ComplexNumber right)
         {
             double realPart = left._module * Math.Cos(left._argument) - right._module * Math.Cos(right._argument);
@@ -84,8 +85,8 @@ namespace App4
         /// <summary>
         /// Перегрузка оператора умножения;
         /// </summary>
-        /// <param name="module">Первое умножаемое</param>
-        /// <param name="argument">Второе умножаемое</param>
+        /// <param name="left">Первое умножаемое</param>
+        /// <param name="right">Второе умножаемое</param>
         public static ComplexNumber operator *(ComplexNumber left, ComplexNumber right)
         {
             double newModule = left._module * right._module;
@@ -97,8 +98,8 @@ namespace App4
         /// <summary>
         /// Перегрузка оператора деления;
         /// </summary>
-        /// <param name="module">Первое делимоее</param>
-        /// <param name="argument">Второе делимое</param>
+        /// <param name="left">Первое делимоее</param>
+        /// <param name="right">Второе делимое</param>
         public static ComplexNumber operator /(ComplexNumber left, ComplexNumber right)
         {
             if (right._module == 0)
@@ -124,8 +125,6 @@ namespace App4
         /// <summary>
         /// Представляем комплексное число в тригонометрической форме, предоставляем значения его компонентов;
         /// </summary>
-        /// <param name="module">Первое число</param>
-        /// <param name="argument">Второе число</param>
         public string TrigonometricForm()
         {
             double realPart = _module * Math.Cos(_argument);
@@ -137,8 +136,6 @@ namespace App4
         /// <summary>
         /// Представляем комплексное число в алгебраической форме, предоставляем значения его компонентов;
         /// </summary>
-        /// <param name="module">Первое число</param>
-        /// <param name="argument">Второе число</param>
         public string AlgebraicForm()
         {
             return $"Algebraic Form: {_module}; {_module}i";
