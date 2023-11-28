@@ -14,14 +14,7 @@ namespace App4
         public double Module
         {
             get { return _module; }
-            set
-            {
-                if (value == 0)
-                {
-                    throw new ArgumentException("Module не должен быть равен нулю.");
-                }
-                _module = value;
-            }
+            set { _module = value; }
         }
 
         /// <summary>
@@ -31,123 +24,158 @@ namespace App4
         public double Argument
         {
             get { return _argument; }
-            set
-            {
-                if (value == 0)
-                {
-                    throw new ArgumentException("Argument не должен быть равен нулю.");
-                }
-                _argument = value;
-            }
+            set { _argument = value; }
         }
-        
+
         /// <summary>
         /// Конструктор для комплексного числа в тригонометрической форме.
+        /// Выполняем проверку на нулевые числаю. Если 0 тогда генерируем новое.
         /// </summary>
         /// <param name="module">Модуль "р"</param>
         /// <param name="argument">Аргумент "ф"</param>
         public ComplexNumber(double module, double argument)
         {
-            Module = module;
-            Argument = argument;
+            if (module != null && argument != argument){
+                if (module == 0)
+                {
+                    Random random = new Random();
+                    _module = random.Next(1, 100);
+                }
+                else
+                {
+                    _module = module;
+                }
+
+                if (argument == 0)
+                {
+                    Random random = new Random();
+                    _argument = random.Next(-100, 100);
+                }
+                else
+                {
+                    _argument = argument;
+                }
+            }
+            throw new ArgumentException("modul or argument is null!");
         }
-        
+
         /// <summary>
         /// Перегрузка оператора сложения;
         /// </summary>
-        /// <param name="module">Первое слогаемое</param>
-        /// <param name="argument">Второе слогаемое</param>
+        /// <param name="left">Первое слогаемое</param>
+        /// <param name="right">Второе слогаемое</param>
         public static ComplexNumber operator +(ComplexNumber left, ComplexNumber right)
         {
-            double realPart = left.Module * Math.Cos(left.Argument) + right.Module * Math.Cos(right.Argument);
-            double imaginaryPart = left.Module * Math.Sin(left.Argument) + right.Module * Math.Sin(right.Argument);
+            if (left == null && right == null)
+            {
+                double realPart = left._module * Math.Cos(left._argument) + right._module * Math.Cos(right._argument);
+                double imaginaryPart =
+                    left._module * Math.Sin(left._argument) + right._module * Math.Sin(right._argument);
 
-            return new ComplexNumber(Math.Sqrt(realPart * realPart + imaginaryPart * imaginaryPart), Math.Atan2(imaginaryPart, realPart));
+                return new ComplexNumber(Math.Sqrt(realPart * realPart + imaginaryPart * imaginaryPart),
+                    Math.Atan2(imaginaryPart, realPart));
+            }
+
+            throw new ArgumentException("left or right is null!");
         }
-        
+
         /// <summary>
         /// Перегрузка оператора вычитания;
         /// </summary>
-        /// <param name="module">Первое вычитаемое</param>
-        /// <param name="argument">Второе вычитаемое</param>
+        /// <param name="left">Первое вычитаемое</param>
+        /// <param name="right">Второе вычитаемое</param>
         public static ComplexNumber operator -(ComplexNumber left, ComplexNumber right)
         {
-            double realPart = left.Module * Math.Cos(left.Argument) - right.Module * Math.Cos(right.Argument);
-            double imaginaryPart = left.Module * Math.Sin(left.Argument) - right.Module * Math.Sin(right.Argument);
+            if (left == null && right == null)
+            {
+                double realPart = left._module * Math.Cos(left._argument) - right._module * Math.Cos(right._argument);
+                double imaginaryPart =
+                    left._module * Math.Sin(left._argument) - right._module * Math.Sin(right._argument);
 
-            return new ComplexNumber(Math.Sqrt(realPart * realPart + imaginaryPart * imaginaryPart), Math.Atan2(imaginaryPart, realPart));
+                return new ComplexNumber(Math.Sqrt(realPart * realPart + imaginaryPart * imaginaryPart),
+                    Math.Atan2(imaginaryPart, realPart));
+            }
+
+            throw new AggregateException("Left or right is null!");
         }
 
         /// <summary>
-        /// Перегрузка оператора умножения;
-        /// </summary>
-        /// <param name="module">Первое умножаемое</param>
-        /// <param name="argument">Второе умножаемое</param>
-        public static ComplexNumber operator *(ComplexNumber left, ComplexNumber right)
+    /// Перегрузка оператора умножения;
+    /// </summary>
+    /// <param name="left">Первое умножаемое</param>
+    /// <param name="right">Второе умножаемое</param>
+    public static ComplexNumber operator *(ComplexNumber left, ComplexNumber right)
+    {
+        if (left != null && right != null)
         {
-            double newModule = left.Module * right.Module;
-            double newArgument = left.Argument + right.Argument;
+            double newModule = left._module * right._module;
+            double newArgument = left._argument + right._argument;
 
             return new ComplexNumber(newModule, newArgument);
         }
 
-        /// <summary>
+        throw new ArgumentException("left or right is null!");
+    }
+
+    /// <summary>
         /// Перегрузка оператора деления;
         /// </summary>
-        /// <param name="module">Первое делимоее</param>
-        /// <param name="argument">Второе делимое</param>
+        /// <param name="left">Первое делимоее</param>
+        /// <param name="right">Второе делимое</param>
         public static ComplexNumber operator /(ComplexNumber left, ComplexNumber right)
         {
-            if (right.Module == 0)
+            if (left != null && right != null)
             {
-                throw new DivideByZeroException("Делить на ноль нельзя!");
-            }
-            else
-            {
-                double newModule = left.Module / right.Module;
-                double newArgument = left.Argument - right.Argument;
+                if (right._module == 0)
+                {
+                    return new ComplexNumber(double.PositiveInfinity, double.PositiveInfinity);
+                }
 
-                return new ComplexNumber(newModule, newArgument);   
+                double newModule = left._module / right._module;
+                double newArgument = left._argument - right._argument;
+
+                return new ComplexNumber(newModule, newArgument);
             }
+
+            throw new AggregateException("left or right is nul!");
         }
-
 
         /// Метод для возведения в степень модуля "p";
         public ComplexNumber Power(int exponent)
         {
-            double newModule = Math.Pow(Module, exponent);
-            double newArgument = Argument * exponent;
+            if (exponent != null)
+            {
+                double newModule = Math.Pow(_module, exponent);
+                double newArgument = _argument * exponent;
 
-            return new ComplexNumber(newModule, newArgument);
+                return new ComplexNumber(newModule, newArgument);
+            }
+
+            throw new AggregateException("Exponent is null!");
         }
 
         /// <summary>
         /// Представляем комплексное число в тригонометрической форме, предоставляем значения его компонентов;
         /// </summary>
-        /// <param name="module">Первое число</param>
-        /// <param name="argument">Второе число</param>
         public string TrigonometricForm()
         {
-            double realPart = Module * Math.Cos(Argument);
-            double imaginaryPart = Module * Math.Sin(Argument);
-
-            // F3 - формат числа до 3 знаков после запятой;
-            return $"Тригонометрическая форма: {realPart:F3}; {imaginaryPart:F3}i";
+            double realPart = _module * Math.Cos(_argument);
+            double imaginaryPart = _module * Math.Sin(_argument);
+        
+            return $"Trigonometric Form: {realPart}; {imaginaryPart}i";
         }
             
         /// <summary>
         /// Представляем комплексное число в алгебраической форме, предоставляем значения его компонентов;
         /// </summary>
-        /// <param name="module">Первое число</param>
-        /// <param name="argument">Второе число</param>
         public string AlgebraicForm()
         {
-            return $"Алгебраическая форма: {Module:F3}; {Argument:F3}i";
+            return $"Algebraic Form: {_module}; {_module}i";
         }
 
-        public override string ToString()
-        {
-            return $"\n{Module}\n{Argument}";
+         public override string ToString()
+         {
+            return $"\n{_module}\n{_argument}";
         }
     }
 }
