@@ -35,7 +35,7 @@ namespace App4
         /// <param name="argument">Аргумент "ф"</param>
         public ComplexNumber(double module, double argument)
         {
-            if (module != null && argument != argument){
+            if (module != null && argument != null){
                 if (module == 0)
                 {
                     Random random = new Random();
@@ -66,7 +66,7 @@ namespace App4
         /// <param name="right">Второе слогаемое</param>
         public static ComplexNumber operator +(ComplexNumber left, ComplexNumber right)
         {
-            if (left == null && right == null)
+            if (left != null && right != null)
             {
                 double realPart = left._module * Math.Cos(left._argument) + right._module * Math.Cos(right._argument);
                 double imaginaryPart =
@@ -86,7 +86,7 @@ namespace App4
         /// <param name="right">Второе вычитаемое</param>
         public static ComplexNumber operator -(ComplexNumber left, ComplexNumber right)
         {
-            if (left == null && right == null)
+            if (left != null && right != null)
             {
                 double realPart = left._module * Math.Cos(left._argument) - right._module * Math.Cos(right._argument);
                 double imaginaryPart =
@@ -164,7 +164,7 @@ namespace App4
         
             return $"Trigonometric Form: {realPart}; {imaginaryPart}i";
         }
-            
+        
         /// <summary>
         /// Представляем комплексное число в алгебраической форме, предоставляем значения его компонентов;
         /// </summary>
